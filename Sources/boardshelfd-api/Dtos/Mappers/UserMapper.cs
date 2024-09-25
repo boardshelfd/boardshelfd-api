@@ -4,20 +4,26 @@ namespace Dtos.Mappers
 {
     public static class UserMapper 
     {
+
+        // --- ToDto --- //
+
         public static UserDto ToDto(User user)
         {
             return new UserDto
             {
                 Id = user.Id,
                 Name = user.Name,
-                Email = user.Email
+                Email = user.Email,
+                GamesIds = user.GameCollection?.Where(x => x != null).Select(c => c.GameId) ?? Enumerable.Empty<int>()
             };
         }
 
         public static IEnumerable<UserDto> ToDto(IEnumerable<User> users)
         {
-            return users.Select(ToDto);
+            return users.Select(ToDto) ?? Enumerable.Empty <UserDto>();
         }
+
+        // --- ToEntity --- //
 
         public static User ToEntity(UserDto dto)
         {
@@ -29,9 +35,9 @@ namespace Dtos.Mappers
             };
         }
 
-        public static IEnumerable<User> ToDto(IEnumerable<UserDto> dtos)
+        public static ICollection<User> ToEntity(IEnumerable<UserDto> dtos)
         {
-            return dtos.Select(ToEntity);
+            return dtos.Select(ToEntity).ToList() ?? Enumerable.Empty<User>().ToList();
         }
     }
 }

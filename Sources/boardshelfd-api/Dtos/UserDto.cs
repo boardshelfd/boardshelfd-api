@@ -21,5 +21,11 @@ namespace Dtos
         /// </summary>
         [Description("The user's Email")]
         public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user's games ids.
+        /// </summary>
+        [Description("The user's games ids")]
+        public IEnumerable<int> GamesIds { get; set; }
     }
 }

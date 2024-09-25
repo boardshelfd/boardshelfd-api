@@ -28,5 +28,10 @@ namespace Providers.Entities
         /// </summary>
         [Required, MaxLength(128)]
         public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or sets the users games.
+        /// </summary>
+        public virtual ICollection<UserGameCollection> GameCollection { get; set; }
     }
 }

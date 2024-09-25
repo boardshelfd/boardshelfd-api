@@ -38,7 +38,7 @@ namespace Business.Services
         /// <returns>The list of trait stack</returns>
         public async Task<List<User>> GetAllUsers(CancellationToken cancellationToken)
         {
-            return await _unitOfWork._dbContext.User.OrderBy(x => x.Id).ToListAsync(cancellationToken);
+            return await _unitOfWork._dbContext.User.Include(c => c.GameCollection).OrderBy(x => x.Id).ToListAsync(cancellationToken);
         }
     }    
 }
