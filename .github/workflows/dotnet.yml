@@ -22,9 +22,9 @@ jobs:
         dotnet-version: 8.0.x
     - name: Restore dependencies
       run: |
-        cd boardshelfd-api/Sources/boardshelfd-api/ 
+        cd ./Sources/boardshelfd-api/ 
         dotnet restore
     - name: Build
       run: |
-        cd boardshelfd-api/Sources/boardshelfd-api/
+        cd ./Sources/boardshelfd-api/
         dotnet build --no-restore
