@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mock\" />
-    <Folder Include="Data\" />
+    <ProjectReference Include="..\Dtos\Dtos.csproj" />
+    <ProjectReference Include="..\Providers\Providers.csproj" />
   </ItemGroup>
 
 </Project>

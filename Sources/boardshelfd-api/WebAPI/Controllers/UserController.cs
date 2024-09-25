@@ -1,5 +1,8 @@
+using Business.Services;
 using Microsoft.AspNetCore.Mvc;
 using Dtos;
+using Dtos.Mappers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
@@ -7,28 +10,21 @@ namespace WebAPI.Controllers
     [Route("user")]
     public class UserController
     {
-        private static readonly string[] users =
+        /// <summary>
+        /// The user service.
+        /// </summary>
+        private readonly UserService _userService;
+        
+        public UserController(UserService userService)
         {
-            "user0", "User1", "User2", "User3", "User4"
-        };
-
-        private readonly ILogger<UserController> _logger;
-
-        public UserController(ILogger<UserController> logger)
-        {
-            _logger = logger;
+            _userService = userService ?? throw new ArgumentNullException(nameof(UserService));
         }
 
         [HttpGet("all", Name = "GetAllUsers")]
-        public IEnumerable<UserDto> Get()
+        public async Task<IEnumerable<UserDto>> GetAllUserAsync(CancellationToken cancellationToken = default)
         {
-            return Enumerable.Range(0, users.Length).Select(index => new UserDto
-            {
-                Id = index,
-                Name = users[index],
-                Email = users[index] + "@wanadoo.fr"
-            })
-            .ToArray();
+            var users = await _userService.GetAllUsers(cancellationToken);
+            return UserMapper.ToDto(users);
         }
     }
 }

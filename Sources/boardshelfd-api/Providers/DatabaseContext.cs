@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 using Providers.Entities;
 
 namespace Providers
@@ -15,6 +16,9 @@ namespace Providers
         {
         }
 
+        public DatabaseContext() : base()
+        {
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer($"Database=ex_01_01_ConnectionStrings.DATABASE.mdf");
