@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Providers.Entities;
 
 namespace Providers
@@ -19,10 +18,6 @@ namespace Providers
         public DatabaseContext() : base()
         {
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer($"Database=ex_01_01_ConnectionStrings.DATABASE.mdf");
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,10 +27,11 @@ namespace Providers
 
         private static void InitializeUser(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable("USER");
+            modelBuilder.Entity<User>().ToTable("APP_USER");
             modelBuilder.Entity<User>().HasKey(u => new { u.Id });
+            modelBuilder.Entity<User>().Property(u => u.Id).HasColumnName("USR_ID").HasColumnType("int");
             modelBuilder.Entity<User>().Property(u => u.Name).HasColumnName("USR_NAME").HasColumnType("varchar(64)");
-            modelBuilder.Entity<User>().Property(u => u.Password).HasColumnName("USR_PWD").HasColumnType("varchar(128)");
+            modelBuilder.Entity<User>().Property(u => u.Password).HasColumnName("USR_PWD").HasColumnType("varchar(max)");
             modelBuilder.Entity<User>().Property(u => u.Email).HasColumnName("USR_EMAIL").HasColumnType("varchar(max)");
         }
     }

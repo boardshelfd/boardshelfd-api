@@ -12,14 +12,6 @@ public class UnitOfWork
         _dbContext.Database.EnsureCreated();
     }
     
-    public UnitOfWork(DbContextOptions<DatabaseContext> options) : this(new DatabaseContext(options))
-    {
-    }
-
-    public UnitOfWork() : this(new DatabaseContext())
-    {
-    }
-    
     public int SaveChanges()
     {
         int result = 0;

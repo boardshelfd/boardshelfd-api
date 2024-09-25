@@ -30,10 +30,6 @@ namespace Business.Services
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
-
-            _unitOfWork._dbContext.Add(new User() { Id = 0, Email = "test", Name = "test" });
-            _unitOfWork._dbContext.Add(new User() { Id = 1, Email = "test2", Name = "test2" });
-            _unitOfWork._dbContext.SaveChanges();
         }
         
         /// <summary>
