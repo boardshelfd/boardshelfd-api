@@ -17,6 +17,12 @@ namespace Dtos
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the user's password.
+        /// </summary>
+        [Description("The user's password")]
+        public string Password { get; set; }
+
+        /// <summary>
         /// Gets or sets the user's Email.
         /// </summary>
         [Description("The user's Email")]
