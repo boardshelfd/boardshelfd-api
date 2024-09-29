@@ -54,10 +54,40 @@ namespace Business.Services
 
         public async Task<int> CreateUserAsync(User user, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Try to create trait strack {Id}", user.Id);
+            _logger.LogInformation("Try to create user {Id}", user.Id);
             await _unitOfWork._dbContext.AddAsync(user, cancellationToken);
             var result = await _unitOfWork._dbContext.SaveChangesAsync(cancellationToken);
-            _logger.LogInformation("Success to create trait strack {Id}", user.Id);
+            _logger.LogInformation("Success to create user {Id}", user.Id);
+            return result;
+        }
+
+        public async Task<int> DeleteUserAsync(User user, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("Try to delete user {Id}", user.Id);
+            _unitOfWork._dbContext.Remove(user);
+            var result = await _unitOfWork._dbContext.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation("Success to delete user {Id}", user.Id);
+            return result;
+        }
+        public async Task<int> DeleteUserFromIdAsync(int userId, CancellationToken cancellationToken)
+        {
+            var userToRemove = _unitOfWork._dbContext.User.SingleOrDefault(u => u.Id == userId);
+
+            if (userToRemove == null) { return 0; }
+            
+            _logger.LogInformation("Try to delete user {Id}", userToRemove.Id);
+            _unitOfWork._dbContext.Remove(userToRemove);
+            var result = await _unitOfWork._dbContext.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation("Success to delete user {Id}", userToRemove.Id);
+            return result;
+        }
+
+        public async Task<int> UpdateUserAsync(User user, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("Try to update user {Id}", user.Id);
+            _unitOfWork._dbContext.Update(user);
+            var result = await _unitOfWork._dbContext.SaveChangesAsync(cancellationToken);
+            _logger.LogInformation("Success to update user {Id}", user.Id);
             return result;
         }
     }    

@@ -2,6 +2,9 @@ using Business.Services;
 using Microsoft.AspNetCore.Mvc;
 using Dtos;
 using Dtos.Mappers;
+using Microsoft.AspNetCore.Http.HttpResults;
+using System.Runtime.CompilerServices;
+using Microsoft.Identity.Client;
 
 namespace WebAPI.Controllers
 {
@@ -16,7 +19,7 @@ namespace WebAPI.Controllers
         /// The user service.
         /// </summary>
         private readonly UserService _userService;
-        
+
         public UserController(UserService userService)
         {
             _userService = userService ?? throw new ArgumentNullException(nameof(UserService));
@@ -52,6 +55,30 @@ namespace WebAPI.Controllers
         {
             var result = await _userService.CreateUserAsync(user.ToEntity(), cancellationToken);
             return result != 0 ? new CreatedResult(nameof(CreateUserAsync), result) : new BadRequestResult();
+        }
+
+        [HttpDelete("", Name = "DeleteUser")]
+        [ProducesResponseType<IEnumerable<UserDto>>(StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteUserAsync([FromBody] UserDto user, CancellationToken cancellationToken = default)
+        {
+            var result = await _userService.DeleteUserAsync(user.ToEntity(), cancellationToken);
+            return result != 0 ? new OkObjectResult(result) : new NotFoundResult();
+        }
+
+        [HttpDelete("id/{userId}", Name = "DeleteUserFromId")]
+        [ProducesResponseType<IEnumerable<UserDto>>(StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteUserFromIdAsync(int userId, CancellationToken cancellationToken = default)
+        {
+            var result = await _userService.DeleteUserFromIdAsync(userId, cancellationToken);
+            return result != 0 ? new OkObjectResult(result) : new NotFoundResult();
+        }
+
+        [HttpPut("", Name = "UpdateUser")]
+        [ProducesResponseType<IEnumerable<UserDto>>(StatusCodes.Status201Created)]
+        public async Task<IActionResult> UpdateUserAsync(UserDto user, CancellationToken cancellationToken)
+        {
+            var result = await _userService.UpdateUserAsync(user.ToEntity(), cancellationToken);
+            return result != 0 ? new CreatedResult(nameof(UpdateUserAsync), result) : new NotFoundResult();
         }
     }
 }
