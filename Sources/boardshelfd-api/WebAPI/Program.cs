@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Providers;
 
 var builder = WebApplication.CreateBuilder(args);
+var corsPolicy = "corsPolicy";
 
 // Add services to the container
 builder.Services.AddControllers();
@@ -15,6 +16,13 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(c
 
 builder.Services.AddTransient<UnitOfWork>();
 builder.Services.AddTransient<UserService>();
+
+builder.Services.AddCors(options => options.AddPolicy(name: corsPolicy, builder =>
+{
+    builder.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+}));
 
 var app = builder.Build();
 
@@ -30,5 +38,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors(corsPolicy);
 
 app.Run();
