@@ -33,7 +33,7 @@ Edit config to fit with your SQL Server database: (`Sources/boardshelfd-api/WebA
 Restore & Build:
 
 ```shell
-cd Sources/boardsheld-api/
+cd Sources/boardshelfd-api/
 
 dotnet restore
 
