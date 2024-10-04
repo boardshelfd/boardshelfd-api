@@ -24,8 +24,9 @@ Clone repo:
 git clone https://github.com/boardshelfd/boardshelfd-api.git
 ```
 
-Edit config to fit with your SQL Server database: (`Sources/boardshelfd-api/WebAPI/appsettings.json`)
+Edit config to fit with your SQL Server database: 
 
+> Sources/boardshelfd-api/WebAPI/appsettings.json
 ```json
 "ConnectionStrings": {
     "DefaultConnection": "Server=localhost,2300;Database=BSD;Persist Security Info=False;User ID=YourUserID;Password=YourP@ssword;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;"
