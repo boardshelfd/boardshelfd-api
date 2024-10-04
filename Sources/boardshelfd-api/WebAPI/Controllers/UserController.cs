@@ -54,6 +54,7 @@ namespace WebAPI.Controllers
             return result != 0 ? new CreatedResult(nameof(CreateUserAsync), result) : new BadRequestResult();
         }
 
+        /*
         [HttpDelete("", Name = "DeleteUser")]
         [ProducesResponseType<IEnumerable<UserDto>>(StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteUserAsync([FromBody] UserDto user, CancellationToken cancellationToken = default)
@@ -62,7 +63,6 @@ namespace WebAPI.Controllers
             return result != 0 ? new OkObjectResult(result) : new NotFoundResult();
         }
 
-        /*
         [HttpDelete("id/{userId}", Name = "DeleteUserFromId")]
         [ProducesResponseType<IEnumerable<UserDto>>(StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteUserFromIdAsync(int userId, CancellationToken cancellationToken = default)
