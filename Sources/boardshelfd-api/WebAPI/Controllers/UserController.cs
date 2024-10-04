@@ -2,9 +2,6 @@ using Business.Services;
 using Microsoft.AspNetCore.Mvc;
 using Dtos;
 using Dtos.Mappers;
-using Microsoft.AspNetCore.Http.HttpResults;
-using System.Runtime.CompilerServices;
-using Microsoft.Identity.Client;
 
 namespace WebAPI.Controllers
 {

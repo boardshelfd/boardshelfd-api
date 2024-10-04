@@ -1,3 +1,4 @@
+using BoardGameGeekClient;
 using Business.Services;
 using Microsoft.EntityFrameworkCore;
 using Providers;
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(c
 
 builder.Services.AddTransient<UnitOfWork>();
 builder.Services.AddTransient<UserService>();
+builder.Services.AddTransient<BoardGameGeekService>();
 
 builder.Services.AddCors(options => options.AddPolicy(name: corsPolicy, builder =>
 {

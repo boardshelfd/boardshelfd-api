@@ -8,10 +8,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.0-rc.1.24451.1" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.1" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\BoardGameGeekClient\BoardGameGeekClient.csproj" />
 		<ProjectReference Include="..\Business\Business.csproj" />
 		<ProjectReference Include="..\Dtos\Dtos.csproj" />
 	</ItemGroup>
