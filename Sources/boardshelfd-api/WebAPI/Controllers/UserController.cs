@@ -62,6 +62,7 @@ namespace WebAPI.Controllers
             return result != 0 ? new OkObjectResult(result) : new NotFoundResult();
         }
 
+        /*
         [HttpDelete("id/{userId}", Name = "DeleteUserFromId")]
         [ProducesResponseType<IEnumerable<UserDto>>(StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteUserFromIdAsync(int userId, CancellationToken cancellationToken = default)
@@ -69,6 +70,7 @@ namespace WebAPI.Controllers
             var result = await _userService.DeleteUserFromIdAsync(userId, cancellationToken);
             return result != 0 ? new OkObjectResult(result) : new NotFoundResult();
         }
+        */
 
         [HttpPut("", Name = "UpdateUser")]
         [ProducesResponseType<IEnumerable<UserDto>>(StatusCodes.Status201Created)]

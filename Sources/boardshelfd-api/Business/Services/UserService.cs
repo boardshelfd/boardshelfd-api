@@ -61,6 +61,7 @@ namespace Business.Services
             return result;
         }
 
+        /*
         public async Task<int> DeleteUserAsync(User user, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Try to delete user {Id}", user.Id);
@@ -69,6 +70,8 @@ namespace Business.Services
             _logger.LogInformation("Success to delete user {Id}", user.Id);
             return result;
         }
+        */
+
         public async Task<int> DeleteUserFromIdAsync(int userId, CancellationToken cancellationToken)
         {
             var userToRemove = _unitOfWork._dbContext.User.SingleOrDefault(u => u.Id == userId);
