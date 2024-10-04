@@ -6,7 +6,9 @@
 
 # boardshelfd-api
 
-This is the source code of the boardshelfd API. (Mostly used for user management)
+This is the source code of the boardshelfd API. 
+
+Two goals of this API : User management / Parse [BGG XML API](https://boardgamegeek.com/wiki/page/BGG_XML_API2), to transform it into JSON.
 
 **Prerequisites:**
 
