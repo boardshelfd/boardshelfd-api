@@ -103,13 +103,18 @@ namespace BoardGameGeekClient
             while (data == null && retries < 60)
             {
                 retries++;
-                
-                HttpClient client = new()
+
+                HttpClient httpClient = new(
+                        new HttpClientHandler
+                        {
+                            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+                        }
+                    )
                 {
-                    Timeout = new TimeSpan(0, 0, 15)
+                    Timeout = new TimeSpan(0, 0, 15),
                 };
-                
-                using var response = await client.GetAsync(requestUrl);
+
+                using var response = await httpClient.GetAsync(requestUrl);
                 
                 if (response.StatusCode == HttpStatusCode.Accepted)
                 {
@@ -118,6 +123,7 @@ namespace BoardGameGeekClient
                 }
 
                 using var reader = new StreamReader(response.Content.ReadAsStream(), Encoding.UTF8);
+
                 data = XDocument.Parse(await reader.ReadToEndAsync());
             }
 
