@@ -46,5 +46,12 @@ namespace WebAPI.Controllers
             var game = await _gameService.GetHotGameAsync();
             return game == null ? new NotFoundResult() : new OkObjectResult(game);
         }
+
+        [HttpGet("user-collection/{username}", Name = "GetUserCollection")]
+        public async Task<IActionResult> GetUserCollectionAync(string username)
+        {
+            var games = await _gameService.GetUserCollectionAync(username);
+            return games == null ? new NotFoundResult() : new OkObjectResult(games);
+        }
     }
 }

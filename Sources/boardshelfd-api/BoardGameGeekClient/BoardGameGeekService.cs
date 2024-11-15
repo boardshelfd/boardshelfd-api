@@ -14,8 +14,8 @@ namespace BoardGameGeekClient
         {
             try
             {
-                Uri teamDataURI = new Uri(string.Format(BASE_URL + "/thing?id={0}&stats=1", gameId));
-                XDocument xDoc = await ReadData(teamDataURI);
+                Uri dataUri = new Uri(string.Format(BASE_URL + "/thing?id={0}&stats=1", gameId));
+                XDocument xDoc = await ReadData(dataUri);
 
                 // LINQ to XML.
                 IEnumerable<GameDetails> gameCollection = from Boardgame in xDoc.Descendants("items")
@@ -48,8 +48,8 @@ namespace BoardGameGeekClient
         {
             try
             {
-                Uri teamDataURI = new Uri(string.Format(BASE_URL + "/search?query={0}&type=boardgame", gameName));
-                XDocument xDoc = await ReadData(teamDataURI);
+                Uri dataUri = new Uri(string.Format(BASE_URL + "/search?query={0}&type=boardgame", gameName));
+                XDocument xDoc = await ReadData(dataUri);
 
                 // LINQ to XML.
                 IEnumerable<Game> games = from Boardgame in xDoc.Descendants("item")
@@ -72,8 +72,8 @@ namespace BoardGameGeekClient
         {
             try
             {
-                Uri teamDataURI = new Uri(BASE_URL + "/hot?thing=boardgame");
-                XDocument xDoc = await ReadData(teamDataURI);
+                Uri dataUri = new Uri(BASE_URL + "/hot?thing=boardgame");
+                XDocument xDoc = await ReadData(dataUri);
 
                 // LINQ to XML.
                 IEnumerable<Game> games = from Boardgame in xDoc.Descendants("item")
@@ -87,6 +87,30 @@ namespace BoardGameGeekClient
                                              };
 
                 return games;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Game>> GetUserCollectionAync(string username)
+        {
+            try
+            {
+                Uri dataUri = new Uri(string.Format(BASE_URL + "/collection?username={0}&own=1", username));
+                XDocument xDoc = await ReadData(dataUri);
+
+                IEnumerable<Game> gameCollection = from Boardgame in xDoc.Descendants("item")
+                                                   select new Game
+                                                   {
+                                                       Name = Boardgame.Element("name").Value,
+                                                       YearPublished = Boardgame.Element("yearpublished") != null ? int.Parse(Boardgame.Element("yearpublished").Value) : 0,
+                                                       Thumbnail = Boardgame.Element("thumbnail").Value,
+                                                       GameId = int.Parse(Boardgame.Attribute("objectid").Value),
+                                                   };
+
+                return gameCollection;
             }
             catch
             {
@@ -114,12 +138,12 @@ namespace BoardGameGeekClient
                     Timeout = new TimeSpan(0, 0, 15),
                 };
 
-                using var response = await httpClient.GetAsync(requestUrl);
-                
-                if (response.StatusCode == HttpStatusCode.Accepted)
+                var response = await httpClient.GetAsync(requestUrl);
+
+                while (response.StatusCode != HttpStatusCode.OK && response.StatusCode == HttpStatusCode.Accepted)
                 {
-                    await Task.Delay(500);
-                    continue;
+                    await Task.Delay(1);
+                    response = await httpClient.GetAsync(requestUrl);
                 }
 
                 using var reader = new StreamReader(response.Content.ReadAsStream(), Encoding.UTF8);
