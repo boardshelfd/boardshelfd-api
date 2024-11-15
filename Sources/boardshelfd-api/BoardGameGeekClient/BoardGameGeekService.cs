@@ -38,10 +38,9 @@ namespace BoardGameGeekClient
 
                 return gameCollection.FirstOrDefault();
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
-                //return null;
             }
         }
 
@@ -63,7 +62,7 @@ namespace BoardGameGeekClient
                 
                 return games;
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -89,7 +88,7 @@ namespace BoardGameGeekClient
 
                 return games;
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -99,25 +98,27 @@ namespace BoardGameGeekClient
         {
             Debug.WriteLine("Downloading " + requestUrl.ToString());
 
-            XDocument data = null;
+            XDocument? data = null;
             int retries = 0;
             while (data == null && retries < 60)
             {
                 retries++;
-                var request = WebRequest.CreateHttp(requestUrl);
-                request.Timeout = 15000;
-                using (var response = (HttpWebResponse)(await request.GetResponseAsync()))
+                
+                HttpClient client = new()
                 {
-                    if (response.StatusCode == HttpStatusCode.Accepted)
-                    {
-                        await Task.Delay(500);
-                        continue;
-                    }
-                    using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
-                    {
-                        data = XDocument.Parse(await reader.ReadToEndAsync());
-                    }
+                    Timeout = new TimeSpan(0, 0, 15)
+                };
+                
+                using var response = await client.GetAsync(requestUrl);
+                
+                if (response.StatusCode == HttpStatusCode.Accepted)
+                {
+                    await Task.Delay(500);
+                    continue;
                 }
+
+                using var reader = new StreamReader(response.Content.ReadAsStream(), Encoding.UTF8);
+                data = XDocument.Parse(await reader.ReadToEndAsync());
             }
 
             if (data != null)
@@ -126,7 +127,7 @@ namespace BoardGameGeekClient
             }
             else
             {
-                throw new Exception("Failed to download BGG data.");
+                throw new HttpRequestException("Failed to download BGG data.");
             }
         }
     }
