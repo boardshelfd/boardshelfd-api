@@ -1,16 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Providers.Entities
 {
-    public class User
+    public class User : BaseEntity
     {
-        /// <summary>
-        /// Gets or sets the user's id.
-        /// </summary>
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         /// <summary>
         /// Gets or sets the user's name.
         /// </summary>

@@ -1,10 +1,10 @@
 ﻿namespace Providers.Entities
 {
-    public class UserGameCollection
+    public class UserGameCollection : BaseEntity
     {
-        public User User { get; set; }
 
         public int UserId { get; set; }
         public int GameId { get; set; }
+        public User User { get; set; }
     }
 }
