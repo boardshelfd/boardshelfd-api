@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Identity.Client;
 using Providers;
 using Providers.Entities;
 
@@ -42,7 +41,7 @@ namespace Business.Services
             return await _unitOfWork._dbContext.User.Include(c => c.GameCollection).OrderBy(x => x.Id).ToListAsync(cancellationToken);
         }
 
-        public async Task<User> GetUserByIdAsync(int userId, CancellationToken cancellationToken)
+        public async Task<User?> GetUserByIdAsync(int userId, CancellationToken cancellationToken)
         {
             return await _unitOfWork._dbContext.User.Where(u => u.Id == userId).Include(c => c.GameCollection).SingleOrDefaultAsync(cancellationToken);
         }
