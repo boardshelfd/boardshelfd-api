@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Providers;
-using Providers.Entities;
+using Entities;
 
 namespace Business.Services
 {

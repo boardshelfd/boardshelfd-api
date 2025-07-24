@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Providers.Entities;
+using Entities;
 
 namespace Providers
 {

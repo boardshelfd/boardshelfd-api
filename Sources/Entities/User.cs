@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Providers.Entities
+namespace Entities
 {
     public class User : BaseEntity
     {

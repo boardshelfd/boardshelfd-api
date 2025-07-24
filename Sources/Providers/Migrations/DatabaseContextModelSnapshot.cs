@@ -21,7 +21,7 @@ namespace Providers.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Providers.Entities.User", b =>
+            modelBuilder.Entity("Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,7 +48,7 @@ namespace Providers.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Providers.Entities.UserGameCollection", b =>
+            modelBuilder.Entity("Entities.UserGameCollection", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -69,9 +69,9 @@ namespace Providers.Migrations
                     b.ToTable("UserGameCollection");
                 });
 
-            modelBuilder.Entity("Providers.Entities.UserGameCollection", b =>
+            modelBuilder.Entity("Entities.UserGameCollection", b =>
                 {
-                    b.HasOne("Providers.Entities.User", "User")
+                    b.HasOne("Entities.User", "User")
                         .WithMany("GameCollection")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -80,7 +80,7 @@ namespace Providers.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Providers.Entities.User", b =>
+            modelBuilder.Entity("Entities.User", b =>
                 {
                     b.Navigation("GameCollection");
                 });

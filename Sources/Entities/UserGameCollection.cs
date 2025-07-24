@@ -1,4 +1,4 @@
-﻿namespace Providers.Entities
+﻿namespace Entities
 {
     public class UserGameCollection : BaseEntity
     {

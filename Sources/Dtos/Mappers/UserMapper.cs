@@ -1,4 +1,4 @@
-using Providers.Entities;
+using Entities;
 
 namespace Dtos.Mappers
 {
